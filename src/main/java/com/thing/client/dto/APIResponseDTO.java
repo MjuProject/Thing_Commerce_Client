@@ -15,11 +15,15 @@ public class APIResponseDTO<T> {
     private final String message;
     private T data;
 
-    public static <T> APIResponseDTO<T> success(T data){
+    public static APIResponseDTO success(){
+        return new APIResponseDTO(true, 0, "성공하였습니다.");
+    }
+
+    public static <T> APIResponseDTO success(T data){
         return new APIResponseDTO(true, 0, "성공하였습니다.", data);
     }
 
-    public static <T> APIResponseDTO<T> fail(int code, String message){
+    public static APIResponseDTO fail(int code, String message){
         return new APIResponseDTO(false, code, message);
     }
 }
