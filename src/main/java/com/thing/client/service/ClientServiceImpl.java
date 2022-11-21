@@ -5,7 +5,9 @@ import com.thing.client.dto.ClientInfoDTO;
 import com.thing.client.dto.ReviewResponseDTO;
 import com.thing.client.dto.SignupRequestDTO;
 import com.thing.client.exception.ClientNotFoundException;
+import com.thing.client.exception.ExistIdException;
 import com.thing.client.exception.ExistNicknameException;
+import com.thing.client.exception.InputNullException;
 import com.thing.client.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
@@ -20,6 +22,14 @@ import java.io.IOException;
 public class ClientServiceImpl implements ClientService{
 
     private final ClientRepository clientRepository;
+
+    @Override
+    public void checkId(String clientId) {
+        if(clientRepository.findByClientId(clientId).isPresent())
+            throw new ExistIdException();
+        if(clientId == null || clientId.isEmpty() || clientId.isBlank())
+            throw new InputNullException();
+    }
 
     @Transactional
     @Override

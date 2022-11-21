@@ -1,9 +1,7 @@
 package com.thing.client.advice;
 
 import com.thing.client.dto.APIResponseDTO;
-import com.thing.client.exception.ClientExceptionType;
-import com.thing.client.exception.ClientNotFoundException;
-import com.thing.client.exception.ExistNicknameException;
+import com.thing.client.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,4 +34,17 @@ public class ClientExceptionAdvice {
         return APIResponseDTO.fail(exceptionType.getCode(), exceptionType.getMessage());
     }
 
+    @ExceptionHandler(ExistIdException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected APIResponseDTO existIdException(){
+        ClientExceptionType exceptionType = ClientExceptionType.EXIST_ID;
+        return APIResponseDTO.fail(exceptionType.getCode(), exceptionType.getMessage());
+    }
+
+    @ExceptionHandler(InputNullException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected APIResponseDTO inputNullException(){
+        ClientExceptionType exceptionType = ClientExceptionType.INPUT_NULL;
+        return APIResponseDTO.fail(exceptionType.getCode(), exceptionType.getMessage());
+    }
 }

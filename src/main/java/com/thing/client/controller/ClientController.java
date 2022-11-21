@@ -18,9 +18,10 @@ public class ClientController {
         return APIResponseDTO.success(clientService.findById(clientIdx));
     }
 
-    @GetMapping(value = "/me/id-check")
-    public APIResponseDTO checkId(){
-        return null;
+    @GetMapping(value = "/id-check")
+    public APIResponseDTO checkId(@RequestParam String clientId){
+        clientService.checkId(clientId);
+        return APIResponseDTO.success();
     }
 
     @GetMapping(value = "/me/items/{item-id}/review")
