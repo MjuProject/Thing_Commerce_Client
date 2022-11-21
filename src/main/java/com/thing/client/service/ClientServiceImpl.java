@@ -5,10 +5,12 @@ import com.thing.client.dto.ClientInfoDTO;
 import com.thing.client.dto.ReviewResponseDTO;
 import com.thing.client.dto.SignupRequestDTO;
 import com.thing.client.exception.ClientNotFoundException;
+import com.thing.client.exception.ExistNicknameException;
 import com.thing.client.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -19,10 +21,13 @@ public class ClientServiceImpl implements ClientService{
 
     private final ClientRepository clientRepository;
 
-
+    @Transactional
     @Override
     public void modifyClientNickname(int clientIndex, String nickName) {
-
+        Client client = clientRepository.findById(clientIndex).orElseThrow(ClientNotFoundException::new);
+        if(clientRepository.findByNickname(nickName).isPresent())
+            throw new ExistNicknameException();
+        client.setNickname(nickName);
     }
 
     @Override
@@ -38,11 +43,13 @@ public class ClientServiceImpl implements ClientService{
         return clientInfoDTO;
     }
 
+    @Transactional
     @Override
     public Client registryClient(SignupRequestDTO signupRequestDTO) {
         return clientRepository.save(signupRequestDTO.toEntity());
     }
 
+    @Transactional
     @Override
     public void modifyClientPhoto(Integer clientIndex, MultipartFile clientPhoto) throws IOException {
 

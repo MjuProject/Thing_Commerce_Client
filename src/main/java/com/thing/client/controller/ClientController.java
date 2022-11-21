@@ -19,12 +19,12 @@ public class ClientController {
     }
 
     @GetMapping(value = "/me/id-check")
-    public APIResponseDTO<Object> checkId(){
+    public APIResponseDTO checkId(){
         return null;
     }
 
     @GetMapping(value = "/me/items/{item-id}/review")
-    public APIResponseDTO<Object> showMyItemReview(@PathVariable("item-id") Integer itemId){
+    public APIResponseDTO showMyItemReview(@PathVariable("item-id") Integer itemId){
         return null;
     }
 
@@ -35,12 +35,13 @@ public class ClientController {
     }
 
     @PutMapping(value = "/{client-idx}/nickname")
-    public APIResponseDTO<Object> updateClientNickName(@PathVariable("client-idx") Integer clientIdx){
-        return null;
+    public APIResponseDTO updateClientNickName(@PathVariable("client-idx") Integer clientIdx, @RequestParam("nickname") String nickname){
+        clientService.modifyClientNickname(clientIdx, nickname);
+        return APIResponseDTO.success();
     }
 
     @PutMapping(value = "/me/client-photo")
-    public APIResponseDTO<Object> updateClientPhoto(){
+    public APIResponseDTO updateClientPhoto(){
         return null;
     }
 

@@ -34,7 +34,23 @@ public class ClientServiceImplTest {
                 .clientIndex(1)
                 .clientId("test")
                 .email("test@test")
+                .nickname("test")
                 .build();
+    }
+
+    @Test
+    public void modifyClientNickname_test(){
+        // given
+        Integer clientIndex = client.getClientIndex();
+        String updateNickName = "test2";
+
+        given(clientRepository.findById(any())).willReturn(Optional.ofNullable(client));
+
+        // when
+        clientService.modifyClientNickname(clientIndex, updateNickName);
+
+        // then
+        assertThat(updateNickName).isEqualTo(client.getNickname());
     }
 
     @Test
