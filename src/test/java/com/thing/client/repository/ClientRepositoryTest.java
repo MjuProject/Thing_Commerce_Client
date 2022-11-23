@@ -20,6 +20,8 @@ public class ClientRepositoryTest {
     @BeforeEach
     public void setUp(){
         client = Client.builder()
+                .clientId("test")
+                .password("test")
                 .email("test@test")
                 .nickname("test")
                 .build();
@@ -59,6 +61,19 @@ public class ClientRepositoryTest {
 
         // when
         Client findClient = clientRepository.findByNickname(nickname).get();
+
+        // then
+        assertThat(findClient.getClientIndex()).isEqualTo(clientIndex);
+    }
+
+    @Test
+    public void findByClientId_test(){
+        // given
+        String clientId = client.getClientId();
+        Integer clientIndex = clientRepository.save(client).getClientIndex();
+
+        // when
+        Client findClient = clientRepository.findByClientId(clientId).get();
 
         // then
         assertThat(findClient.getClientIndex()).isEqualTo(clientIndex);

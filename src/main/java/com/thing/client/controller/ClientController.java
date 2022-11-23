@@ -18,6 +18,11 @@ public class ClientController {
         return APIResponseDTO.success(clientService.findById(clientIdx));
     }
 
+    @GetMapping(value = "/id/{client-id}")
+    public APIResponseDTO showClientById(@PathVariable("client-id") String clientId){
+        return APIResponseDTO.success(clientService.findByClientId(clientId));
+    }
+
     @GetMapping(value = "/id-check")
     public APIResponseDTO checkId(@RequestParam String clientId){
         clientService.checkId(clientId);

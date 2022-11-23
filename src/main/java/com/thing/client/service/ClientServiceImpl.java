@@ -2,6 +2,7 @@ package com.thing.client.service;
 
 import com.thing.client.domain.Client;
 import com.thing.client.dto.ClientInfoDTO;
+import com.thing.client.dto.LoginInfoDTO;
 import com.thing.client.dto.ReviewResponseDTO;
 import com.thing.client.dto.SignupRequestDTO;
 import com.thing.client.exception.ClientNotFoundException;
@@ -51,6 +52,12 @@ public class ClientServiceImpl implements ClientService{
         ClientInfoDTO clientInfoDTO = ClientInfoDTO.from(client);
         // 신뢰점수 계산 로직 필요
         return clientInfoDTO;
+    }
+
+    @Override
+    public LoginInfoDTO findByClientId(String clientId) {
+        Client client = clientRepository.findByClientId(clientId).orElseThrow(ClientNotFoundException::new);
+        return LoginInfoDTO.from(client);
     }
 
     @Transactional

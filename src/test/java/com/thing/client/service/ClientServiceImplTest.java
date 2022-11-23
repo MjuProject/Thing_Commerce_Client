@@ -2,6 +2,7 @@ package com.thing.client.service;
 
 import com.thing.client.domain.Client;
 import com.thing.client.dto.ClientInfoDTO;
+import com.thing.client.dto.LoginInfoDTO;
 import com.thing.client.dto.SignupRequestDTO;
 import com.thing.client.repository.ClientRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +34,7 @@ public class ClientServiceImplTest {
         client = Client.builder()
                 .clientIndex(1)
                 .clientId("test")
+                .password("test")
                 .email("test@test")
                 .nickname("test")
                 .build();
@@ -67,6 +69,22 @@ public class ClientServiceImplTest {
         // then
         assertThat(clientIndex).isEqualTo(clientInfoDTO.getClientIndex());
         assertThat(email).isEqualTo(clientInfoDTO.getEmail());
+    }
+
+    @Test
+    public void findByClientId_test(){
+        // given
+        Integer clientIndex = client.getClientIndex();
+        String clientId = client.getClientId();
+
+        given(clientRepository.findByClientId(any())).willReturn(Optional.ofNullable(client));
+
+        // when
+        LoginInfoDTO loginInfoDTO = clientService.findByClientId(clientId);
+
+        // then
+        assertThat(clientIndex).isEqualTo(loginInfoDTO.getClientIndex());
+        assertThat(clientId).isEqualTo(loginInfoDTO.getClientId());
     }
 
     @Test
