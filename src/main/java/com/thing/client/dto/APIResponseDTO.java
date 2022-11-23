@@ -7,13 +7,20 @@ import lombok.*;
 @Setter
 @ToString
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class APIResponseDTO<T> {
-    private final boolean success;
-    private final int code;
-    private final String message;
+
+    private boolean success;
+    private int code;
+    private String message;
     private T data;
+
+    public APIResponseDTO(boolean success, int code, String message) {
+        this.success = success;
+        this.code = code;
+        this.message = message;
+    }
 
     public static APIResponseDTO success(){
         return new APIResponseDTO(true, 0, "성공하였습니다.");
