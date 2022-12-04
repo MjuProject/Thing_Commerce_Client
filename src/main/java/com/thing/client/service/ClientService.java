@@ -13,6 +13,7 @@ import java.io.IOException;
 public interface ClientService {
 
     public void checkId(String clientId);
+    public void checkNickname(String nickname);
     public void modifyClientNickname(int clientIndex, String nickName);
     public Slice<ReviewResponseDTO> getReviewByOwnerIndex(Integer itemId, Integer page);
     public ClientInfoDTO findById(Integer clientIndex);

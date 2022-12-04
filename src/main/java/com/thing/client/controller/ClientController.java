@@ -29,6 +29,12 @@ public class ClientController {
         return APIResponseDTO.success();
     }
 
+    @GetMapping(value = "/nickname-check")
+    public APIResponseDTO checkNickname(@RequestParam String nickname){
+        clientService.checkNickname(nickname);
+        return APIResponseDTO.success();
+    }
+
     @GetMapping(value = "/me/items/{item-id}/review")
     public APIResponseDTO showMyItemReview(@PathVariable("item-id") Integer itemId){
         return null;

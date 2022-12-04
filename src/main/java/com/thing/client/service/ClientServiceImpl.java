@@ -26,10 +26,18 @@ public class ClientServiceImpl implements ClientService{
 
     @Override
     public void checkId(String clientId) {
-        if(clientRepository.findByClientId(clientId).isPresent())
-            throw new ExistIdException();
         if(clientId == null || clientId.isEmpty() || clientId.isBlank())
             throw new InputNullException();
+        if(clientRepository.findByClientId(clientId).isPresent())
+            throw new ExistIdException();
+    }
+
+    @Override
+    public void checkNickname(String nickname) {
+        if(nickname == null || nickname.isEmpty() || nickname.isBlank())
+            throw new InputNullException();
+        if(clientRepository.findByNickname(nickname).isPresent())
+            throw new ExistNicknameException();
     }
 
     @Transactional
