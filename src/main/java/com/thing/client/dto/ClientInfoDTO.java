@@ -32,7 +32,7 @@ public class ClientInfoDTO {
                 .birthdate(client.getBirthdate())
                 .clientName(client.getClientName())
                 .nickname(client.getNickname())
-                .clientPhoto(client.getClientPhoto())
+                .clientPhoto("/clients/photos/" + client.getClientIndex())
                 .build();
     }
 

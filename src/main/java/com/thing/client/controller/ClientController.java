@@ -4,7 +4,13 @@ import com.thing.client.dto.APIResponseDTO;
 import com.thing.client.dto.SignupRequestDTO;
 import com.thing.client.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,9 +58,19 @@ public class ClientController {
         return APIResponseDTO.success();
     }
 
-    @PutMapping(value = "/me/client-photo")
-    public APIResponseDTO updateClientPhoto(){
-        return null;
+    @PutMapping(value = "/{client-idx}/client-photo")
+    public APIResponseDTO updateClientPhoto(@PathVariable("client-idx") Integer clientIdx,
+                                            @RequestParam("image") MultipartFile image) throws IOException {
+        clientService.modifyClientPhoto(clientIdx, image);
+        return APIResponseDTO.success();
+    }
+
+    @GetMapping(value = "/photos/{client-idx}")
+    public byte[] showPhoto(@PathVariable("client-idx") Integer clientIdx) throws IOException {
+        InputStream imageStream = new FileInputStream(clientService.getClientPhotoPath(clientIdx));
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return imageByteArray;
     }
 
 }

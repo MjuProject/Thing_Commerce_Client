@@ -47,4 +47,11 @@ public class ClientExceptionAdvice {
         ClientExceptionType exceptionType = ClientExceptionType.INPUT_NULL;
         return APIResponseDTO.fail(exceptionType.getCode(), exceptionType.getMessage());
     }
+
+    @ExceptionHandler(PhotoSaveFailException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected APIResponseDTO photoSaveFailException(){
+        ClientExceptionType exceptionType = ClientExceptionType.PHOTO_SAVE_FAIL;
+        return APIResponseDTO.fail(exceptionType.getCode(), exceptionType.getMessage());
+    }
 }

@@ -20,5 +20,5 @@ public interface ClientService {
     public LoginInfoDTO findByClientId(String clientId);
     public Client registryClient(SignupRequestDTO signupRequestDTO);
     public void modifyClientPhoto(Integer clientIndex, MultipartFile clientPhoto) throws IOException;
-
+    public String getClientPhotoPath(Integer clientIdx);
 }
